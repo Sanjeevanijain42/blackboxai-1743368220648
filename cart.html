@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Baghbaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .remove-btn:hover {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Header (same as index.html) -->
+    <header class="bg-green-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-2xl"></i>
+                <h1 class="text-2xl font-bold">Baghbaan</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="hover:text-green-200">Home</a></li>
+                    <li><a href="ai-detection.html" class="hover:text-green-200">Plant Health</a></li>
+                    <li><a href="gardeners.html" class="hover:text-green-200">Gardeners</a></li>
+                    <li><a href="products.html" class="hover:text-green-200">Shop</a></li>
+                    <li>
+                        <a href="cart.html" class="flex items-center hover:text-green-200">
+                            <i class="fas fa-shopping-cart mr-1"></i>
+                            <span id="cart-count" class="bg-green-600 rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-green-800">Your Shopping Cart</h2>
+            
+            <!-- Cart Items -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+                <div class="hidden" id="empty-cart">
+                    <div class="p-12 text-center">
+                        <i class="fas fa-shopping-cart text-5xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-medium mb-2">Your cart is empty</h3>
+                        <p class="text-gray-600 mb-6">Browse our products to find what you need</p>
+                        <a href="products.html" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+                
+                <div id="cart-items">
+                    <!-- Cart items will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-semibold mb-4 text-green-800">Order Summary</h3>
+                <div class="space-y-3 mb-6">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Subtotal</span>
+                        <span id="subtotal" class="font-medium">$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Shipping</span>
+                        <span id="shipping" class="font-medium">$5.99</span>
+                    </div>
+                    <div class="flex justify-between border-t border-gray-200 pt-3">
+                        <span class="text-lg font-semibold">Total</span>
+                        <span id="total" class="text-lg font-bold text-green-800">$5.99</span>
+                    </div>
+                </div>
+                <button id="checkout-btn" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium disabled:opacity-50" disabled>
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="bg-green-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Baghbaan</h3>
+                    <p>Your complete plant care solution powered by AI and expert knowledge.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="ai-detection.html" class="hover:text-green-300">Plant Health</a></li>
+                        <li><a href="gardeners.html" class="hover:text-green-300">Find Gardeners</a></li>
+                        <li><a href="products.html" class="hover:text-green-300">Shop Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <p><i class="fas fa-envelope mr-2"></i> contact@baghbaan.com</p>
+                    <p class="mt-2"><i class="fas fa-phone mr-2"></i> +1-555-123-4567</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-green-800 mt-8 pt-6 text-center">
+                <p>&copy; 2023 Baghbaan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+            
+            // DOM elements
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartDiv = document.getElementById('empty-cart');
+            const subtotalElement = document.getElementById('subtotal');
+            const shippingElement = document.getElementById('shipping');
+            const totalElement = document.getElementById('total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            // Sample product data (in a real app, this would come from a database)
+            const products = {
+                '1': {
+                    name: 'Professional Pruning Shears',
+                    price: 24.99,
+                    image: 'https://images.pexels.com/photos/4505168/pexels-photo-4505168.jpeg'
+                },
+                '2': {
+                    name: 'Ceramic Plant Pot',
+                    price: 32.50,
+                    image: 'https://images.pexels.com/photos/4505163/pexels-photo-4505163.jpeg'
+                },
+                '3': {
+                    name: 'Galvanized Watering Can',
+                    price: 18.99,
+                    image: 'https://images.pexels.com/photos/4505457/pexels-photo-4505457.jpeg'
+                },
+                '4': {
+                    name: 'Leather Gardening Gloves',
+                    price: 15.99,
+                    image: 'https://images.pexels.com/photos/4505451/pexels-photo-4505451.jpeg'
+                },
+                '5': {
+                    name: 'Organic Plant Fertilizer',
+                    price: 12.99,
+                    image: 'https://images.pexels.com/photos/4505164/pexels-photo-4505164.jpeg'
+                },
+                '6': {
+                    name: 'Stainless Steel Trowel',
+                    price: 14.50,
+                    image: 'https://images.pexels.com/photos/4505167/pexels-photo-4505167.jpeg'
+                }
+            };
+            
+            // Render cart items
+            function renderCart() {
+                if (cart.length === 0) {
+                    emptyCartDiv.classList.remove('hidden');
+                    cartItemsContainer.innerHTML = '';
+                    checkoutBtn.disabled = true;
+                    updateTotals(0);
+                    return;
+                }
+                
+                emptyCartDiv.classList.add('hidden');
+                checkoutBtn.disabled = false;
+                
+                let html = '';
+                let subtotal = 0;
+                
+                cart.forEach(item => {
+                    const product = products[item.id];
+                    const itemTotal = product.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    html += `
+                        <div class="flex items-center p-4 border-b border-gray-100" data-id="${item.id}">
+                            <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden mr-4">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium">${product.name}</h4>
+                                <p class="text-green-800 font-medium">$${product.price.toFixed(2)}</p>
+                            </div>
+                            <div class="flex items-center">
+                                <button class="quantity-btn bg-gray-100 rounded-l-md" onclick="updateQuantity('${item.id}', -1)">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="quantity-display w-10 text-center">${item.quantity}</span>
+                                <button class="quantity-btn bg-gray-100 rounded-r-md" onclick="updateQuantity('${item.id}', 1)">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="ml-6 text-right w-20">
+                                <p class="font-medium">$${itemTotal.toFixed(2)}</p>
+                            </div>
+                            <button class="remove-btn ml-4 text-gray-400 hover:text-red-500" onclick="removeItem('${item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                
+                cartItemsContainer.innerHTML = html;
+                updateTotals(subtotal);
+            }
+            
+            // Update quantity of an item
+            window.updateQuantity = function(id, change) {
+                const itemIndex = cart.findIndex(item => item.id === id);
+                if (itemIndex !== -1) {
+                    cart[itemIndex].quantity += change;
+                    
+                    if (cart[itemIndex].quantity <= 0) {
+                        cart.splice(itemIndex, 1);
+                    }
+                    
+                    saveCart();
+                    renderCart();
+                }
+            };
+            
+            // Remove an item from cart
+            window.removeItem = function(id) {
+                cart = cart.filter(item => item.id !== id);
+                saveCart();
+                renderCart();
+            };
+            
+            // Update order totals
+            function updateTotals(subtotal) {
+                const shipping = subtotal > 50 ? 0 : 5.99;
+                const total = subtotal + shipping;
+                
+                subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+                shippingElement.textContent = subtotal > 50 ? 'FREE' : `$${shipping.toFixed(2)}`;
+                totalElement.textContent = `$${total.toFixed(2)}`;
+            }
+            
+            // Save cart to localStorage
+            function saveCart() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+                document.getElementById('cart-count').textContent = cartCount;
+            }
+            
+            // Initialize cart with sample data if empty (for demo)
+            if (cart.length === 0) {
+                cart = [
+                    { id: '1', quantity: 1 },
+                    { id: '3', quantity: 2 }
+                ];
+                saveCart();
+            }
+            
+            // Initial render
+            renderCart();
+            
+            // Checkout button
+            checkoutBtn.addEventListener('click', function() {
+                alert('Checkout functionality would be implemented here in a real application.');
+            });
+        });
+    </script>
+</body>
+</html>
