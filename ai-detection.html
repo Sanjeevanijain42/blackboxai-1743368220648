@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Health Detection | Baghbaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .upload-area {
+            border: 2px dashed #4ade80;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #16a34a;
+            background-color: rgba(74, 222, 128, 0.05);
+        }
+        .disease-card {
+            border-left: 4px solid #ef4444;
+        }
+        .healthy-card {
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Header (same as index.html) -->
+    <header class="bg-green-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-2xl"></i>
+                <h1 class="text-2xl font-bold">Baghbaan</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="hover:text-green-200">Home</a></li>
+                    <li><a href="ai-detection.html" class="hover:text-green-200 font-semibold">Plant Health</a></li>
+                    <li><a href="gardeners.html" class="hover:text-green-200">Gardeners</a></li>
+                    <li><a href="products.html" class="hover:text-green-200">Shop</a></li>
+                    <li>
+                        <a href="cart.html" class="flex items-center hover:text-green-200">
+                            <i class="fas fa-shopping-cart mr-1"></i>
+                            <span id="cart-count" class="bg-green-600 rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-2 text-green-800">Plant Health Detection</h2>
+            <p class="text-center text-gray-600 mb-8">Upload a photo of your plant and our AI will analyze its health status</p>
+            
+            <!-- Upload Section -->
+            <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+                <div id="upload-container" class="upload-area rounded-lg p-12 text-center cursor-pointer mb-4">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-green-600 mb-4"></i>
+                    <p class="text-lg font-medium">Drag & drop your plant photo here</p>
+                    <p class="text-sm text-gray-500 mt-2">or click to browse files (JPG, PNG)</p>
+                    <input type="file" id="plant-image" accept="image/*" class="hidden">
+                </div>
+                <div id="preview-container" class="hidden mb-4 text-center">
+                    <img id="image-preview" src="#" alt="Preview" class="max-h-64 mx-auto rounded-lg">
+                </div>
+                <button id="analyze-btn" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium disabled:opacity-50" disabled>
+                    Analyze Plant Health
+                </button>
+            </div>
+            
+            <!-- Results Section (initially hidden) -->
+            <div id="results-section" class="bg-white rounded-lg shadow-md p-8 hidden">
+                <h3 class="text-xl font-semibold mb-4 text-green-800">Analysis Results</h3>
+                <div id="health-status" class="mb-6 p-4 rounded-lg">
+                    <div class="flex items-center">
+                        <div id="status-icon" class="text-4xl mr-4"></div>
+                        <div>
+                            <h4 id="status-title" class="text-lg font-medium"></h4>
+                            <p id="status-desc" class="text-gray-600"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="disease-info" class="hidden">
+                    <h4 class="font-medium mb-2">Possible Disease:</h4>
+                    <div class="disease-card bg-red-50 p-4 rounded-r-lg mb-4">
+                        <h5 id="disease-name" class="font-medium text-red-800"></h5>
+                        <p id="disease-desc" class="text-sm text-gray-600 mt-1"></p>
+                    </div>
+                    
+                    <h4 class="font-medium mb-2">Recommended Treatment:</h4>
+                    <div class="healthy-card bg-green-50 p-4 rounded-r-lg">
+                        <p id="treatment-text" class="text-sm"></p>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <button id="new-analysis-btn" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                        <i class="fas fa-redo mr-2"></i> Analyze Another Plant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="bg-green-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Baghbaan</h3>
+                    <p>Your complete plant care solution powered by AI and expert knowledge.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="ai-detection.html" class="hover:text-green-300">Plant Health</a></li>
+                        <li><a href="gardeners.html" class="hover:text-green-300">Find Gardeners</a></li>
+                        <li><a href="products.html" class="hover:text-green-300">Shop Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <p><i class="fas fa-envelope mr-2"></i> contact@baghbaan.com</p>
+                    <p class="mt-2"><i class="fas fa-phone mr-2"></i> +1-555-123-4567</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-green-800 mt-8 pt-6 text-center">
+                <p>&copy; 2023 Baghbaan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart counter
+            const cartCount = localStorage.getItem('cartCount') || 0;
+            document.getElementById('cart-count').textContent = cartCount;
+            
+            // Image upload and preview
+            const uploadContainer = document.getElementById('upload-container');
+            const fileInput = document.getElementById('plant-image');
+            const previewContainer = document.getElementById('preview-container');
+            const imagePreview = document.getElementById('image-preview');
+            const analyzeBtn = document.getElementById('analyze-btn');
+            
+            uploadContainer.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length) {
+                    const file = e.target.files[0];
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            imagePreview.src = event.target.result;
+                            uploadContainer.classList.add('hidden');
+                            previewContainer.classList.remove('hidden');
+                            analyzeBtn.disabled = false;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+            
+            // Drag and drop functionality
+            uploadContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadContainer.classList.add('border-green-500', 'bg-green-50');
+            });
+            
+            uploadContainer.addEventListener('dragleave', () => {
+                uploadContainer.classList.remove('border-green-500', 'bg-green-50');
+            });
+            
+            uploadContainer.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadContainer.classList.remove('border-green-500', 'bg-green-50');
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    const event = new Event('change');
+                    fileInput.dispatchEvent(event);
+                }
+            });
+            
+            // Analysis simulation
+            analyzeBtn.addEventListener('click', function() {
+                // Show loading state
+                analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Analyzing...';
+                analyzeBtn.disabled = true;
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    showResults();
+                }, 2000);
+            });
+            
+            function showResults() {
+                const resultsSection = document.getElementById('results-section');
+                const statusIcon = document.getElementById('status-icon');
+                const statusTitle = document.getElementById('status-title');
+                const statusDesc = document.getElementById('status-desc');
+                const diseaseInfo = document.getElementById('disease-info');
+                
+                // For demo purposes, we'll randomly determine health status
+                const isHealthy = Math.random() > 0.3;
+                
+                if (isHealthy) {
+                    statusIcon.innerHTML = '<i class="fas fa-check-circle text-green-500"></i>';
+                    statusTitle.textContent = 'Healthy Plant';
+                    statusDesc.textContent = 'Your plant appears to be in good health with no signs of disease.';
+                    diseaseInfo.classList.add('hidden');
+                } else {
+                    statusIcon.innerHTML = '<i class="fas fa-exclamation-triangle text-yellow-500"></i>';
+                    statusTitle.textContent = 'Potential Issue Detected';
+                    statusDesc.textContent = 'Our AI has detected signs of a possible plant disease.';
+                    
+                    // Set disease info (mock data)
+                    document.getElementById('disease-name').textContent = 'Powdery Mildew';
+                    document.getElementById('disease-desc').textContent = 'Fungal disease appearing as white powdery spots on leaves and stems.';
+                    document.getElementById('treatment-text').textContent = '1. Remove affected leaves. 2. Apply neem oil or fungicide. 3. Improve air circulation around plant.';
+                    
+                    diseaseInfo.classList.remove('hidden');
+                }
+                
+                resultsSection.classList.remove('hidden');
+                document.getElementById('upload-container').classList.add('hidden');
+                analyzeBtn.classList.add('hidden');
+            }
+            
+            // New analysis button
+            document.getElementById('new-analysis-btn').addEventListener('click', function() {
+                fileInput.value = '';
+                previewContainer.classList.add('hidden');
+                resultsSection.classList.add('hidden');
+                uploadContainer.classList.remove('hidden');
+                analyzeBtn.classList.remove('hidden');
+                analyzeBtn.textContent = 'Analyze Plant Health';
+                analyzeBtn.disabled = true;
+            });
+        });
+    </script>
+</body>
+</html>
