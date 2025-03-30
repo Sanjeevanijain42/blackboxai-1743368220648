@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Gardeners | Baghbaan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .gardener-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .star-rating .star {
+            color: #d1d5db;
+        }
+        .star-rating .star.filled {
+            color: #f59e0b;
+        }
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Header (same as index.html) -->
+    <header class="bg-green-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-2xl"></i>
+                <h1 class="text-2xl font-bold">Baghbaan</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="hover:text-green-200">Home</a></li>
+                    <li><a href="ai-detection.html" class="hover:text-green-200">Plant Health</a></li>
+                    <li><a href="gardeners.html" class="hover:text-green-200 font-semibold">Gardeners</a></li>
+                    <li><a href="products.html" class="hover:text-green-200">Shop</a></li>
+                    <li>
+                        <a href="cart.html" class="flex items-center hover:text-green-200">
+                            <i class="fas fa-shopping-cart mr-1"></i>
+                            <span id="cart-count" class="bg-green-600 rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-2 text-green-800">Find Expert Gardeners</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Browse our network of professional gardeners with verified ratings and reviews</p>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="grid md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                    <select class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>Anywhere</option>
+                        <option>New York</option>
+                        <option>Los Angeles</option>
+                        <option>Chicago</option>
+                        <option>Houston</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Service</label>
+                    <select class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>All Services</option>
+                        <option>Landscaping</option>
+                        <option>Plant Care</option>
+                        <option>Tree Trimming</option>
+                        <option>Garden Design</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Availability</label>
+                    <select class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option>Any Time</option>
+                        <option>Weekdays</option>
+                        <option>Weekends</option>
+                        <option>Morning</option>
+                        <option>Afternoon</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md">
+                        Search Gardeners
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gardeners List -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Gardener 1 -->
+            <div class="gardener-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+                <div class="relative">
+                    <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg" alt="Gardener" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-2 shadow">
+                        <i class="fas fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-semibold">Michael Johnson</h3>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Available</span>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="star-rating mr-2">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.2 (24 reviews)</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Specializes in organic gardening and landscape design with 8 years of experience.</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500">From</p>
+                            <p class="font-medium">$35/hour</p>
+                        </div>
+                        <button class="contact-btn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm" data-gardener="Michael Johnson">
+                            Contact
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gardener 2 -->
+            <div class="gardener-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+                <div class="relative">
+                    <img src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg" alt="Gardener" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-2 shadow">
+                        <i class="fas fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-semibold">Sarah Williams</h3>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Available</span>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="star-rating mr-2">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.9 (42 reviews)</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Expert in tropical plants and indoor gardening solutions with 12 years experience.</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500">From</p>
+                            <p class="font-medium">$45/hour</p>
+                        </div>
+                        <button class="contact-btn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm" data-gardener="Sarah Williams">
+                            Contact
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gardener 3 -->
+            <div class="gardener-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+                <div class="relative">
+                    <img src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg" alt="Gardener" class="w-full h-48 object-cover">
+                    <div class="absolute top-2 right-2 bg-white rounded-full p-2 shadow">
+                        <i class="fas fa-heart text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-semibold">David Chen</h3>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Limited Availability</span>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <div class="star-rating mr-2">
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star filled"></i>
+                            <i class="fas fa-star-half-alt filled"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">4.7 (36 reviews)</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Specializes in bonsai care and Japanese garden design with 15 years experience.</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-sm text-gray-500">From</p>
+                            <p class="font-medium">$60/hour</p>
+                        </div>
+                        <button class="contact-btn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm" data-gardener="David Chen">
+                            Contact
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 invisible">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold" id="modal-title">Contact Gardener</h3>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="contact-form">
+                    <input type="hidden" id="gardener-name">
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                        <input type="text" id="name" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone (Optional)</label>
+                        <input type="tel" id="phone" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                        <textarea id="message" rows="3" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="bg-green-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Baghbaan</h3>
+                    <p>Your complete plant care solution powered by AI and expert knowledge.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="ai-detection.html" class="hover:text-green-300">Plant Health</a></li>
+                        <li><a href="gardeners.html" class="hover:text-green-300">Find Gardeners</a></li>
+                        <li><a href="products.html" class="hover:text-green-300">Shop Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <p><i class="fas fa-envelope mr-2"></i> contact@baghbaan.com</p>
+                    <p class="mt-2"><i class="fas fa-phone mr-2"></i> +1-555-123-4567</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-green-300"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-green-800 mt-8 pt-6 text-center">
+                <p>&copy; 2023 Baghbaan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart counter
+            const cartCount = localStorage.getItem('cartCount') || 0;
+            document.getElementById('cart-count').textContent = cartCount;
+            
+            // Modal functionality
+            const modal = document.getElementById('contact-modal');
+            const contactBtns = document.querySelectorAll('.contact-btn');
+            const closeModalBtn = document.getElementById('close-modal');
+            const gardenerNameInput = document.getElementById('gardener-name');
+            const modalTitle = document.getElementById('modal-title');
+            
+            contactBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const gardenerName = this.getAttribute('data-gardener');
+                    gardenerNameInput.value = gardenerName;
+                    modalTitle.textContent = `Contact ${gardenerName}`;
+                    
+                    // Show modal
+                    modal.classList.remove('opacity-0', 'invisible', 'scale-95');
+                    modal.classList.add('opacity-100', 'visible', 'scale-100');
+                });
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                // Hide modal
+                modal.classList.remove('opacity-100', 'visible', 'scale-100');
+                modal.classList.add('opacity-0', 'invisible', 'scale-95');
+            });
+            
+            // Form submission
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const message = document.getElementById('message').value;
+                const gardener = gardenerNameInput.value;
+                
+                // In a real app, you would send this data to your backend
+                console.log('Contact request:', { name, email, phone, message, gardener });
+                
+                // Show success message
+                alert(`Your message to ${gardener} has been sent successfully!`);
+                
+                // Reset form and close modal
+                this.reset();
+                modal.classList.remove('opacity-100', 'visible', 'scale-100');
+                modal.classList.add('opacity-0', 'invisible', 'scale-95');
+            });
+        });
+    </script>
+</body>
+</html>
